@@ -3,6 +3,8 @@ class ApplicationController < ActionController::Base
 
   protected
 
+  helper_method :current_user
+
   def restrict_access
     if !current_user
       flash[:alert] = "You must log in."
@@ -14,6 +16,13 @@ class ApplicationController < ActionController::Base
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
   end
 
-  helper_method :current_user
+  def admin_check
+    if  current_user.nil? || !current_user.admin
+      flash[:alert] = "You must be an Admin to enter."
+      redirect_to new_session_path
+    end
+  end
+
+
 
 end

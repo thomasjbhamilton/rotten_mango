@@ -1,0 +1,39 @@
+<h1>Add a new member!</h1>
+<%= form_for @admin do |f| %>
+ <% if @admin.errors.any? %>
+   <div>
+     <%= pluralize(@admin.errors.count, "error") %> prevented the account from being created:
+     <ul>
+       <% @admin.errors.full_messages.each do |msg| %>
+         <li><%= msg %></li>
+       <% end %>
+     </ul>
+   </div>
+ <% end %>
+ <div>
+   <%= f.label :email %><br>
+   <%= f.text_field :email %>
+ </div>
+ <div>
+   <%= f.label :firstname, "First Name" %><br>
+   <%= f.text_field :firstname %>
+ </div>
+ <div>
+   <%= f.label :lastname, "Last Name" %><br>
+   <%= f.text_field :lastname %>
+ </div>
+ <div>
+   <%= f.label :password %><br>
+   <%= f.password_field :password %>
+ </div>
+ <div>
+   <%= f.label :password_confirmation %><br>
+   <%= f.password_field :password_confirmation %>
+ </div>
+ <div class="">
+   <%= f.label :are_they_admin? %>
+   <%= f.check_box :admin %>
+ </div>
+
+ <div><%= f.submit "Submit" %></div>
+<% end %>
