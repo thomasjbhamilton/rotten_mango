@@ -4,26 +4,11 @@
 
 
 <%= form_tag movies_path, :method => "get" do %>
-<%= text_field_tag :title, params[:title], placeholder: "Movie Title" %>
-<%= text_field_tag :director, params[:director], placeholder: "Director Name" %>
-<%= select_tag :duration, options_for_select([["Under 90 minutes", 1], ["Between 90 and 120 minutes", 2], ["Over 120 minutes", 3]], 3) %>
+<%= text_field_tag :search, params[:search], placeholder: "Movie Title or Director Name" %>
+<%= select_tag :duration, options_for_select([["choose duration", 0], ["Under 90 minutes", 1], ["Between 90 and 120 minutes", 2], ["Over 120 minutes", 3]]) %>
 <%= submit_tag "Search" %>
 <% end %>
 <br>
 <hr>
 
-<% @movies.each do |movie| %>
-  <%= link_to image_tag(movie.image), movie_path(movie) %>
-  <h2><%= link_to movie.title, movie_path(movie) %></h2>
-  <h3><%= formatted_date(movie.release_date) %></h3>
-  <h4>Dir. <%= movie.director %> | <%= movie.runtime_in_minutes %> minutes</h4>
-  <p><%= movie.description %></p>
-    <% if movie.review_average %>
-      <p><%= movie.review_average %>/10</p>
-    <% else %>
-      <p>
-        be the first to review!
-      </p>
-    <% end %>
-  <hr>
-<% end %>
+<%= render 'movie' %>
