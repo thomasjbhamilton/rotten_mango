@@ -3,7 +3,21 @@ class MoviesController < ApplicationController
   before_action :restrict_access
 
   def index
-    @movies = Movie.all
+    if params[:title]
+      t = (params[:title] ? "%"+params[:title]+"%" : "%")
+      d = (params[:director] ? "%"+params[:director]+"%" : "")
+      du = (params[:duration] ? params[:duration] : "")
+      @movies = Movie.where("title like ?", t).where("director like ?", d)
+      if du == '1'
+        @movies = @movies.where("runtime_in_minutes < ?", 90)
+      elsif du == '2'
+        @movies = @movies.where("runtime_in_minutes >= ? AND runtime_in_minutes <= ?", 90, 120)
+      elsif du == '3'
+        @movies = @movies.where("runtime_in_minutes > ?", 120)
+      end
+    else
+      @movies = Movie.all.order('created_at DESC')
+    end
   end
 
  def show
