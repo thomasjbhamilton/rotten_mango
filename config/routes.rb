@@ -12,7 +12,7 @@ Rails.application.routes.draw do
     resources :users
   end
 
-  resources :users, only: [:new, :create]
+  resources :users, only: [:new, :create, :destroy]
   resources :sessions, only: [:new, :create, :destroy]
   root to: 'movies#index'
 
