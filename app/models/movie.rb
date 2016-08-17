@@ -30,6 +30,14 @@ class Movie < ApplicationRecord
     reviews.sum(:rating_out_of_ten)/reviews.size if reviews.size >= 1
   end
 
+
+  # scope :search
+  scope :duration_search_1, -> { where("runtime_in_minutes < ?", 90) }
+  scope :duration_search_2, -> { where("runtime_in_minutes >= ? AND runtime_in_minutes <= ?", 90, 120) }
+  scope :duration_search_3, -> { where("runtime_in_minutes > ?", 120) }
+
+
+
   protected
 
   def release_date_is_in_the_past

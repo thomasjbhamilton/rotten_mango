@@ -9,11 +9,11 @@ class MoviesController < ApplicationController
       du = (params[:duration] ? params[:duration] : "")
       @movies = Movie.where("title like ?", t).where("director like ?", d)
       if du == '1'
-        @movies = @movies.where("runtime_in_minutes < ?", 90)
+        @movies = @movies.duration_search_1
       elsif du == '2'
-        @movies = @movies.where("runtime_in_minutes >= ? AND runtime_in_minutes <= ?", 90, 120)
+        @movies = @movies.duration_search_2
       elsif du == '3'
-        @movies = @movies.where("runtime_in_minutes > ?", 120)
+        @movies = @movies.duration_search_3
       end
     else
       @movies = Movie.all.order('created_at DESC')
