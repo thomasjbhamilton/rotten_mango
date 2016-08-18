@@ -14,9 +14,6 @@ class Movie < ApplicationRecord
   validates :description,
     presence: true
 
-  # validates :poster_image_url,
-  #   presence: true
-
   validates :release_date,
     presence: true
 
@@ -30,13 +27,9 @@ class Movie < ApplicationRecord
     reviews.sum(:rating_out_of_ten)/reviews.size if reviews.size >= 1
   end
 
-
-  # scope :search
   scope :duration_search_1, -> { where("runtime_in_minutes < ?", 90) }
   scope :duration_search_2, -> { where("runtime_in_minutes >= ? AND runtime_in_minutes <= ?", 90, 120) }
   scope :duration_search_3, -> { where("runtime_in_minutes > ?", 120) }
-
-
 
   protected
 

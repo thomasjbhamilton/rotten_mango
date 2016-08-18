@@ -1,8 +1,7 @@
 Rails.application.routes.draw do
 
-  get 'reviews/new'
+  root to: 'movies#index'
 
-  get 'reviews/create'
 
   resources :movies do
     resources :reviews, only: [:new, :create]
@@ -12,11 +11,10 @@ Rails.application.routes.draw do
     resources :users
   end
 
-
   resources :users, only: [:new, :create, :destroy]
-  resources :sessions, only: [:new, :create, :destroy]
+  resource :session, only: [:new, :create, :destroy]
 
-  root to: 'movies#index'
+
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html'
 end

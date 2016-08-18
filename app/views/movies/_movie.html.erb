@@ -8,7 +8,7 @@
       <p><%= movie.review_average %>/10</p>
     <% else %>
       <p>
-        be the first to review!
+        <%= link_to "be the first to review!", movie_path(movie) %>
       </p>
     <% end %>
   <hr>

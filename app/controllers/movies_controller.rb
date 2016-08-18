@@ -3,22 +3,22 @@ class MoviesController < ApplicationController
   before_action :restrict_access
 
   def index
-    if params[:search]
+
+    if params
       t = (params[:search] ? "%"+params[:search]+"%" : "%")
       du = (params[:duration] ? params[:duration] : "")
       @movies = Movie.where("title like ? OR director like ?", t, t)
 
-      if du == '1'
-        @movies = @movies.duration_search_1
-      elsif du == '2'
-        @movies = @movies.duration_search_2
-      elsif du == '3'
-        @movies = @movies.duration_search_3
+      case du
+        when '1' then @movies = @movies.duration_search_1
+        when '2' then @movies = @movies.duration_search_2
+        when '3' then @movies = @movies.duration_search_3
       end
 
     else
       @movies = Movie.all.order('created_at DESC')
     end
+
   end
 
  def show
@@ -55,6 +55,7 @@ class MoviesController < ApplicationController
 
    def destroy
      @movie = Movie.find(params[:id])
+     @movie.reviews.destroy
      @movie.destroy
      redirect_to movies_path
    end
@@ -63,8 +64,10 @@ class MoviesController < ApplicationController
 
   def movie_params
     params.require(:movie).permit(
-    :title, :release_date, :director, :runtime_in_minutes, :poster_image_url, :description, :image, :remove_image, :scale
+    :title, :release_date, :director, :runtime_in_minutes,
+    :poster_image_url, :description, :image, :remove_image,
+    :scale
     )
- end
+  end
 
 end

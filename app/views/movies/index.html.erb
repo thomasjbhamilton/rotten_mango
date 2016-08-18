@@ -1,8 +1,6 @@
 <h1>Rotten Mangoes</h1>
 <%= link_to "Submit a movie!", new_movie_path %>
 <hr>
-
-
 <%= form_tag movies_path, :method => "get" do %>
 <%= text_field_tag :search, params[:search], placeholder: "Movie Title or Director Name" %>
 <%= select_tag :duration, options_for_select([["choose duration", 0], ["Under 90 minutes", 1], ["Between 90 and 120 minutes", 2], ["Over 120 minutes", 3]]) %>
